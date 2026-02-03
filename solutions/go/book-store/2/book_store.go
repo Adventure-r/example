@@ -1,0 +1,49 @@
+package bookstore
+
+import "fmt"
+
+func Cost(books []int) int {
+	fmt.Println("books:", books)
+	// ind 0 - counter 1, ind 1 - counter 2, ind 2 - counter 3,
+	// ind 3 - counter 4, ind 4 - counter 5, ind 5 - counter 6
+	var booksGroupCounter [5]int
+	for NotNull(books) {
+		counter := 0
+		for i := range books {
+			if books[i] > 0 {
+				fmt.Print(books[i], " => ")
+				books[i] -= 1
+				counter += 1
+				fmt.Println(books[i])
+			}
+
+			fmt.Println("iter")
+		}
+		booksGroupCounter[counter-1]++
+	}
+
+	for _, value := range booksGroupCounter {
+		fmt.Print(value, " ")
+	}
+	totalCost := CalculateTotal(booksGroupCounter)
+	fmt.Println("\n\nEND :", totalCost)
+	return totalCost
+}
+
+func NotNull(input []int) bool {
+	for i := range input {
+		if input[i] > 0 {
+			return true
+		}
+	}
+	return false
+}
+
+func CalculateTotal(booksGroupCounter [5]int) int {
+	totalCost := float64(booksGroupCounter[0]) * 8
+	totalCost += float64(booksGroupCounter[1]) * 2 * 8 * 0.95
+	totalCost += float64(booksGroupCounter[2]) * 3 * 8 * 0.9
+	totalCost += float64(booksGroupCounter[3]) * 4 * 8 * 0.8
+	totalCost += float64(booksGroupCounter[4]) * 5 * 8 * 0.75
+	return int(totalCost * 100)
+}
